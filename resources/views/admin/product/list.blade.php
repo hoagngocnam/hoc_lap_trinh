@@ -33,6 +33,7 @@
                                                 'id' => $product->id,
                                             ];
                                         @endphp
+                                        {{-- Mỗi sản phẩm --}}
                                         <tr>
                                             <td>{{ $product->id }}</td>
                                             <td>{{ $product->name }}</td>
@@ -48,6 +49,7 @@
                                                 <a class="btn btn-danger" href="{{ route('admin.product.getDelete', $param) }}">Xóa</a>
                                             </td>
                                         </tr>
+                                        {{-- Kết thúc mỗi sản phẩm --}}
                                     @endforeach
                                 </tbody>
                             </table>

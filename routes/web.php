@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Users\HomeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Users\ProductController as UserProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,9 +17,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'index'])->name('users.home');
+Route::get('/product', [UserProductController::class, 'detail'])->name('users.product.detail');
 
 Route::prefix('admin')->group(function () {
     Route::prefix('category')->group(function () {
@@ -31,12 +32,14 @@ Route::prefix('admin')->group(function () {
     });
 
     Route::prefix('product')->group(function () {
-        Route::get('list', [ProductController::class, 'getList'])->name('admin.product.getList');
-        Route::get('detail', [ProductController::class, 'getDetail'])->name('admin.product.getDetail');
-        Route::get('get_add', [ProductController::class, 'getAdd'])->name('admin.product.getAdd');
-        Route::post('post_add', [ProductController::class, 'postAdd'])->name('admin.product.postAdd');
-        Route::get('get_update', [ProductController::class, 'getUpdate'])->name('admin.product.getUpdate');
-        Route::post('post_update', [ProductController::class, 'postUpdate'])->name('admin.product.postUpdate');
-        Route::get('delete', [ProductController::class, 'getDelete'])->name('admin.product.getDelete');
+        Route::get('list', [AdminProductController::class, 'getList'])->name('admin.product.getList');
+        Route::get('detail', [AdminProductController::class, 'getDetail'])->name('admin.product.getDetail');
+        Route::get('get_add', [AdminProductController::class, 'getAdd'])->name('admin.product.getAdd');
+        Route::post('post_add', [AdminProductController::class, 'postAdd'])->name('admin.product.postAdd');
+        Route::get('get_update', [AdminProductController::class, 'getUpdate'])->name('admin.product.getUpdate');
+        Route::post('post_update', [AdminProductController::class, 'postUpdate'])->name('admin.product.postUpdate');
+        Route::get('delete', [AdminProductController::class, 'getDelete'])->name('admin.product.getDelete');
     });
+
+   
 });

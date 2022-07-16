@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bluebox Free Bootstrap Admin Template</title>
     <!-- Bootstrap Styles-->
-    <link href="{{ asset('assets/css/bootstrap.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/admin/css/bootstrap.css') }}" rel="stylesheet" />
     <!-- FontAwesome Styles-->
-    <link href="{{ asset('assets/css/font-awesome.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/admin/css/font-awesome.css') }}" rel="stylesheet" />
     <!-- Custom Styles-->
-    <link href="{{ asset('assets/css/custom-styles.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/admin/css/custom-styles.css') }}" rel="stylesheet" />
 </head>
 
 <body>
