@@ -15,7 +15,10 @@
                                     @csrf
                                     <div class="form-group">
                                         <label>Name</label>
-                                        <input class="form-control" name="name">
+                                        <input class="form-control" name="name" placeholder="Nhập tên danh mục . . .">
+                                        @error('name')
+                                            <div style="color: red">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <button type="submit" class="btn btn-success">Hoàn thành</button>
                                 </form>

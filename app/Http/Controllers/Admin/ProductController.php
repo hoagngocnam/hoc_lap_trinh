@@ -12,7 +12,21 @@ class ProductController extends Controller
     // Màn hình danh sách category
     public function getList()
     {
-        $productList = DB::table('products')->select('id', 'name', 'author', 'view', 'description', 'picture')->get()->toArray();
+        $productList = DB::table('products')
+            ->select(
+                'products.id',
+                'products.picture',
+                'products.name',
+                'categories.name as category_name',
+                'products.original_price',
+                'products.promotional_price',
+                'products.rating',
+                'products.view'
+            )
+            ->join('categories', 'products.category_id', '=', 'categories.id')
+            ->get()
+            ->toArray();
+
         return view('admin.product.list', compact('productList'));
     }
 
@@ -27,18 +41,33 @@ class ProductController extends Controller
     // Màn hình view form add category
     public function getAdd()
     {
-        return view('admin.product.add');
+        $categories = DB::table('categories')->select('id', 'name')->get()->toArray();
+        // dd($categories);
+        return view('admin.product.add', compact('categories'));
     }
 
     // Màn hình post form add category
     public function postAdd(Request $request)
     {
+        $arrayValidate = [
+            'category_id' => 'required|integer',
+            'name' => 'required|min:10|max:255',
+            'original_price' => 'required',
+            'promotional_price' => 'required',
+            'picture' => 'required',
+        ];
+        $request->validate($arrayValidate);
+
+        // Lấy category id của sản phẩm
+        $category_id = $request->input('category_id', null);
         // Lấy giá trị name - tên sản phẩm
         $name = $request->input('name', '');
-        // Lấy giá trị author - tác giả
-        $author = $request->input('author', '');
-        // Lấy mô tả sản phẩm
-        $description = $request->input('description', '');
+        // Lấy giá gốc
+        $originalPrice = $request->input('original_price', null);
+        // Lấy giá khuyến mãi
+        $promotionalPrice = $request->input('promotional_price', null);
+        // Lấy giá khuyến mãi
+        $posts = $request->input('posts', null);
         // Lấy giá trị ảnh được upload
         $picture = $request->file('picture');
         // Lấy tên mã hóa sản phẩm
@@ -49,9 +78,11 @@ class ProductController extends Controller
         $picture->store('upload/products');
 
         DB::table('products')->insert([
+            'category_id' => $category_id,
             'name' => $name,
-            'author' => $author,
-            'description' => $description,
+            'original_price' => $originalPrice,
+            'promotional_price' => $promotionalPrice,
+            'posts' => $posts,
             'picture' => $urlPicture
         ]);
 

@@ -11,7 +11,7 @@ class CategoryController extends Controller
     // Màn hình danh sách category
     public function getList()
     {
-        $category = DB::table('category')->select('id', 'name')->get()->toArray();
+        $category = DB::table('categories')->select('id', 'name')->get()->toArray();
         return view('admin.category.list', compact('category'));
     }
 
@@ -32,8 +32,12 @@ class CategoryController extends Controller
     // Màn hình post form add category
     public function postAdd(Request $request)
     {
+        $request->validate([
+            'name' => 'required|min:10|max:255'
+        ]);
+
         $name = $request->input('name', '');
-        DB::table('category')->insert([
+        DB::table('categories')->insert([
             'name' => $name
         ]);
 

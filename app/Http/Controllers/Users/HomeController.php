@@ -13,8 +13,8 @@ class HomeController extends Controller
     */
     public function index()
     {
-        $productList = DB::table('products')->select('id', 'name', 'author', 'view', 'description', 'picture')->get()->toArray();
-        $categoryList = DB::table('category')->select('id', 'name')->get()->toArray();
+        $productList = DB::table('products')->select('id', 'name', 'view', 'picture', 'original_price', 'promotional_price')->get()->toArray();
+        $categoryList = DB::table('categories')->select('id', 'name')->get()->toArray();
         // dd($productList);
         return view('users.home.index', compact('productList','categoryList'));
     }
